@@ -1,18 +1,16 @@
 package TestStepDefinitions;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -124,31 +122,66 @@ public class Telesaleswln {
 
 	}
 
-	@And("user enters the following credentials:")
-	public void user_enters_the_following_credentials(DataTable dataTable) throws InterruptedException {
+	@And("^user enters (.*),(.*),(.*) and (.*)$")
+	public void user_enters_firstname_lastname_fiscalcode_and_email(String firstName, String lastName,
+			String fiscalCode, String email) throws InterruptedException {
 
-		List<Map<String, String>> credentials = dataTable.asMaps(String.class, String.class);
-		// Access the values from the table
-		String firstName = credentials.get(0).get("First name");
-		String lastName = credentials.get(0).get("Last name");
-		String fiscalCode = credentials.get(0).get("Fiscal Code");
-		String email = credentials.get(0).get("Email");
-		// Perform the necessary actions with the credentials
+		System.out.println("First Name: " + firstName);
 
 		int randomNumber = VariableUtils.getRandomNumber();
 		driver.findElement(By.xpath("//input[@name='volaMsisdn']")).sendKeys(String.valueOf(randomNumber));
 		driver.findElement(By.xpath("//span[text()='Continua']")).click();
 
-		Thread.sleep(2000);
+		Thread.sleep(5000);
 
-//		// driver.findElement(By.name("owningIndividual.firstName")).sendKeys(firstName);
-//		driver.findElement(By.xpath("//input[@name='owningIndividual.firstName']")).sendKeys(firstName);
-//		driver.findElement(By.name("owningIndividual.lastName")).sendKeys(lastName);
-//		driver.findElement(By.name("oowningIndividual.fiscalCode")).sendKeys(fiscalCode);
-//		driver.findElement(By.name("owningIndividual.nation")).sendKeys("Italia");
-//		driver.findElement(By.name("owningIndividual.identification.identificationType")).sendKeys("Passaporto");
-//		driver.findElement(By.name("owningIndividual.identification.identificationNumber")).sendKeys("VFIT8596");
-//		driver.findElement(By.name("owningIndividual.identification.nationality")).sendKeys("Italia");
+		driver.findElement(By.xpath("//input[@name='owningIndividual.firstName']")).sendKeys(firstName);
+		driver.findElement(By.xpath("//input[@name='owningIndividual.lastName']")).sendKeys(lastName);
+		driver.findElement(By.xpath("//input[@name='owningIndividual.fiscalCode']")).sendKeys(fiscalCode);
+
+		WebElement nation = driver.findElement(By.xpath("//input[@name='owningIndividual.nation']"));
+		nation.sendKeys("Italia");
+		nation.sendKeys(Keys.ARROW_DOWN);
+		nation.sendKeys(Keys.RETURN);
+
+		WebElement ID = driver
+				.findElement(By.xpath("//input[@name='owningIndividual.identification.identificationType']"));
+		ID.sendKeys("Passaporto");
+		ID.sendKeys(Keys.ARROW_DOWN);
+		ID.sendKeys(Keys.RETURN);
+
+		int passport = VariableUtils.getPassport();
+		driver.findElement(By.xpath("//input[@name='owningIndividual.identification.identificationNumber']"))
+				.sendKeys("VFIT" + passport);
+
+		WebElement nationality = driver
+				.findElement(By.xpath("//input[@name='owningIndividual.identification.nationality']"));
+		nationality.sendKeys("Italia");
+		nationality.sendKeys(Keys.ARROW_DOWN);
+		nationality.sendKeys(Keys.RETURN);
+
+		WebElement date = driver.findElement(By.xpath("(//input[@type='text'])[8]"));
+		date.sendKeys("13/06/2025");
+		date.sendKeys(Keys.RETURN);
+		// Thread.sleep(3000);
+		driver.findElement(By.xpath("//input[@name='owningIndividual.email.emailAddress']")).sendKeys(email);
+		int contactNumber = VariableUtils.getContactNumber();
+		driver.findElement(By.xpath("//input[@name='owningIndividual.phone.phoneNumber']"))
+				.sendKeys(String.valueOf("39" + contactNumber));
+		driver.findElement(By.xpath("//button[@type='submit']/span")).click();
+		Thread.sleep(30000);
+		// continue to telephone button
+		driver.findElement(By.xpath("//span[text()='continua']")).click();
+		Thread.sleep(20000);
+		// continue to consegna
+		driver.findElement(By.xpath("//span[text()='continua']")).click();
+		Thread.sleep(20000);
+		// continue to consensi
+		driver.findElement(By.xpath("(//input[@value='Yes'])[1]")).click();
+		driver.findElement(By.xpath("(//input[@value='Yes'])[6]")).click();
+		driver.findElement(By.xpath("//span[text()='continua']")).click();
+		Thread.sleep(20000);
+		driver.findElement(By.xpath("//button[text()='Salta questo passaggio']")).click();
+		driver.findElement(By.xpath("//button[text()='Sintesi contrattuale']")).click();
 
 	}
 
