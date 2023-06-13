@@ -125,7 +125,7 @@ public class Telesaleswln {
 	}
 
 	@And("user enters the following credentials:")
-	public void user_enters_the_following_credentials(DataTable dataTable) {
+	public void user_enters_the_following_credentials(DataTable dataTable) throws InterruptedException {
 
 		List<Map<String, String>> credentials = dataTable.asMaps(String.class, String.class);
 		// Access the values from the table
@@ -138,6 +138,8 @@ public class Telesaleswln {
 		int randomNumber = VariableUtils.getRandomNumber();
 		driver.findElement(By.xpath("//input[@name='volaMsisdn']")).sendKeys(String.valueOf(randomNumber));
 		driver.findElement(By.xpath("//span[text()='Continua']")).click();
+
+		Thread.sleep(2000);
 
 		// driver.findElement(By.name("owningIndividual.firstName")).sendKeys(firstName);
 		driver.findElement(By.xpath("//input[@name='owningIndividual.firstName']")).sendKeys(firstName);
