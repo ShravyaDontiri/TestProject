@@ -141,14 +141,14 @@ public class Telesaleswln {
 
 		Thread.sleep(2000);
 
-		// driver.findElement(By.name("owningIndividual.firstName")).sendKeys(firstName);
-		driver.findElement(By.xpath("//input[@name='owningIndividual.firstName']")).sendKeys(firstName);
-		driver.findElement(By.name("owningIndividual.lastName")).sendKeys(lastName);
-		driver.findElement(By.name("oowningIndividual.fiscalCode")).sendKeys(fiscalCode);
-		driver.findElement(By.name("owningIndividual.nation")).sendKeys("Italia");
-		driver.findElement(By.name("owningIndividual.identification.identificationType")).sendKeys("Passaporto");
-		driver.findElement(By.name("owningIndividual.identification.identificationNumber")).sendKeys("VFIT8596");
-		driver.findElement(By.name("owningIndividual.identification.nationality")).sendKeys("Italia");
+//		// driver.findElement(By.name("owningIndividual.firstName")).sendKeys(firstName);
+//		driver.findElement(By.xpath("//input[@name='owningIndividual.firstName']")).sendKeys(firstName);
+//		driver.findElement(By.name("owningIndividual.lastName")).sendKeys(lastName);
+//		driver.findElement(By.name("oowningIndividual.fiscalCode")).sendKeys(fiscalCode);
+//		driver.findElement(By.name("owningIndividual.nation")).sendKeys("Italia");
+//		driver.findElement(By.name("owningIndividual.identification.identificationType")).sendKeys("Passaporto");
+//		driver.findElement(By.name("owningIndividual.identification.identificationNumber")).sendKeys("VFIT8596");
+//		driver.findElement(By.name("owningIndividual.identification.nationality")).sendKeys("Italia");
 
 	}
 
