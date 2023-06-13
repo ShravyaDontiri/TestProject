@@ -1,6 +1,8 @@
 package TestStepDefinitions;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -10,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -122,14 +125,22 @@ public class Telesaleswln {
 	}
 
 	@And("user enters the following credentials:")
-	public void user_enters_the_following_credentials(String firstName, String lastName, String fiscalCode,
-			String email) {
+	public void user_enters_the_following_credentials(DataTable dataTable) {
+
+		List<Map<String, String>> credentials = dataTable.asMaps(String.class, String.class);
+		// Access the values from the table
+		String firstName = credentials.get(0).get("First name");
+		String lastName = credentials.get(0).get("Last name");
+		String fiscalCode = credentials.get(0).get("Fiscal Code");
+		String email = credentials.get(0).get("Email");
+		// Perform the necessary actions with the credentials
 
 		int randomNumber = VariableUtils.getRandomNumber();
 		driver.findElement(By.xpath("//input[@name='volaMsisdn']")).sendKeys(String.valueOf(randomNumber));
 		driver.findElement(By.xpath("//span[text()='Continua']")).click();
 
-		driver.findElement(By.name("owningIndividual.firstName")).sendKeys(firstName);
+		// driver.findElement(By.name("owningIndividual.firstName")).sendKeys(firstName);
+		driver.findElement(By.xpath("//input[@name='owningIndividual.firstName']")).sendKeys(firstName);
 		driver.findElement(By.name("owningIndividual.lastName")).sendKeys(lastName);
 		driver.findElement(By.name("oowningIndividual.fiscalCode")).sendKeys(fiscalCode);
 		driver.findElement(By.name("owningIndividual.nation")).sendKeys("Italia");
