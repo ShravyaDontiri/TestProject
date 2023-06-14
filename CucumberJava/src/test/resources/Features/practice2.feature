@@ -10,5 +10,5 @@ Feature: Testing telesales portal funcionality
     Then verify that order is submitted
 
     Examples: 
-      | firstName | lastName | fiscalCode       | email   |
-      | ADTT    | ADTT   | DTTDTT98H13F205X | sa@s.com |
+      | firstName | lastName | fiscalCode       | email        |
+      | WRT       | WRT      | WRTWRT98H14F205Z | wrt@mail.com |

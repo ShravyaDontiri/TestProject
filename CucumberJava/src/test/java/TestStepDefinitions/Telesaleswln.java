@@ -126,6 +126,8 @@ public class Telesaleswln {
 	public void user_enters_firstname_lastname_fiscalcode_and_email(String firstName, String lastName,
 			String fiscalCode, String email) throws InterruptedException {
 
+		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+		wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		System.out.println("First Name: " + firstName);
 
 		int randomNumber = VariableUtils.getRandomNumber();
@@ -170,19 +172,48 @@ public class Telesaleswln {
 		driver.findElement(By.xpath("//button[@type='submit']/span")).click();
 		Thread.sleep(30000);
 		// continue to telephone button
-		driver.findElement(By.xpath("//span[text()='continua']")).click();
-		Thread.sleep(20000);
+		wait.until(ExpectedConditions.jsReturnsValue("return document.readyState === 'complete';"));
+		WebElement continue1 = wait
+				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='continua']")));
+		continue1.click();
+		// Thread.sleep(30000);
 		// continue to consegna
-		driver.findElement(By.xpath("//span[text()='continua']")).click();
-		Thread.sleep(20000);
+		wait.until(ExpectedConditions.jsReturnsValue("return document.readyState === 'complete';"));
+		WebElement continue2 = wait.until(ExpectedConditions.elementToBeClickable(By.className("mb30")));
+		jsExecutor.executeScript("arguments[0].click();", continue2);
+		// driver.findElement(By.xpath("//span[text()='continua']")).click();
+		Thread.sleep(30000);
 		// continue to consensi
-		driver.findElement(By.xpath("(//input[@value='Yes'])[1]")).click();
-		driver.findElement(By.xpath("(//input[@value='Yes'])[6]")).click();
+		wait.until(ExpectedConditions.jsReturnsValue("return document.readyState === 'complete';"));
+		WebElement radioButton1 = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//label[@for='happy_full--yes_0']")));
+		radioButton1.click();
+		WebElement radioButton2 = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//label[@for='yes_0']")));
+		radioButton2.click();
+		// driver.findElement(By.xpath("(//input[@value='Yes'])[6]")).click();
 		driver.findElement(By.xpath("//span[text()='continua']")).click();
-		Thread.sleep(20000);
+		Thread.sleep(30000);
 		driver.findElement(By.xpath("//button[text()='Salta questo passaggio']")).click();
-		driver.findElement(By.xpath("//button[text()='Sintesi contrattuale']")).click();
 
+		// sintesi contrattuale button
+		wait.until(ExpectedConditions.jsReturnsValue("return document.readyState === 'complete';"));
+		WebElement contractSummary = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Sintesi contrattuale']")));
+		contractSummary.click();
+		WebElement checkBox = wait
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("//label[@for='agreeTerms']/div/span[2]")));
+		jsExecutor.executeScript("arguments[0].click();", checkBox);
+
+//		File screenShot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//		try {
+//			FileHandler.copy(screenShot, new File(
+//					"C:\Users\shravyad\git\TestProject\CucumberJava\\src\\test\\resources\\screenshots.png"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+
+		// driver.findElement(By.xpath("//span[text()='Conferma']")).click();
 	}
 
 	@When("user completes the payment")
