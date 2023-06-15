@@ -11,4 +11,4 @@ Feature: Testing telesales portal funcionality
 
     Examples: 
       | firstName | lastName | fiscalCode       | email        |
-      | SDD       | SDD      | SDDSDD98H15F205D | sd@mail.com |
+      | SDDT       | SDDT      | SDDSDT98H15F205T | sdt@mail.com |

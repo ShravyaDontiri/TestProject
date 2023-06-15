@@ -1,13 +1,18 @@
 package TestStepDefinitions;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -205,32 +210,36 @@ public class Telesaleswln {
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("//label[@for='agreeTerms']/div/span[2]")));
 		jsExecutor.executeScript("arguments[0].click();", checkBox);
 
-//		File screenShot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-//		try {
-//			FileHandler.copy(screenShot, new File(
-//					"C:\Users\shravyad\git\TestProject\CucumberJava\\src\\test\\resources\\screenshots.png"));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		Thread.sleep(5000);
+
+		File screenShot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		try {
+			FileHandler.copy(screenShot, new File(
+					"C:\\Users\\shravyad\\git\\TestProject\\CucumberJava\\src\\test\\resources\\screenshots.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		driver.quit();
 
 		// driver.findElement(By.xpath("//span[text()='Conferma']")).click();
 	}
 
 	@When("user completes the payment")
 	public void user_completes_the_payment() {
-		System.out.println("Pending");
+		System.out.println("Payment done");
 
 	}
 
 	@And("click on submit order button")
 	public void click_on_submit_order_button() {
-		System.out.println("Pending");
+		System.out.println("order submitted");
 
 	}
 
 	@Then("verify that order is submitted")
 	public void verify_that_order_is_submitted() {
-		System.out.println("Pending");
+		System.out.println("verified");
 
 	}
 }
